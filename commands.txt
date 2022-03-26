@@ -1,0 +1,3 @@
+[trilistnic@localhost ~]$ mysqldump example > sample
+[trilistnic@localhost ~]$ mysqldump mysql help_keyword --opt --where="1 limit 100" > test_dump
+ 
