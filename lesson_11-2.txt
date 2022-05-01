@@ -1,0 +1,76 @@
+-- Task 2.1
+
+[trilistnic@localhost ~]$ su root
+Password: 
+[root@localhost trilistnic]# yum -y install redis
+[root@localhost trilistnic]# redis-server &
+[root@localhost trilistnic]# redis-cli
+127.0.0.1:6379> HSET ipaddress 192.168.0.1 1
+(integer) 1
+127.0.0.1:6379> HSET ipaddress 192.168.0.2 1
+(integer) 1
+
+-- Task 2.2
+127.0.0.1:6379> HSET user user1 user1@mail.com
+(integer) 1
+127.0.0.1:6379> HGET user user1
+"user1@mail.com"
+127.0.0.1:6379> HSET email user1@mail.com user1
+(integer) 1
+127.0.0.1:6379> HGET email user1@mail.com
+"user1"
+
+-- Task 2.3
+[root@localhost trilistnic]# nedit /etc/yum.repos.d/mongodb-org-5.0.repo
+nedit: the current locale is utf8 (en_US.UTF-8)
+nedit: changed locale to non-utf8 (en_US)
+[root@localhost trilistnic]# yum repolist
+[root@localhost trilistnic]# yum -y install mongodb-org
+[root@localhost trilistnic]# systemctl start mongod
+[root@localhost trilistnic]# mongo
+MongoDB shell version v5.0.8
+> use shop
+switched to db shop
+> db.catalogs.insertMany([{"name": "Процессоры"}, {"name": "Материнские платы"}, {"name": "Видеокарты"}, {"name": "Жесткие диски"}, {"name": "Оперативная память"}])
+{
+	"acknowledged" : true,
+	"insertedIds" : [
+		ObjectId("626dcc0680b21c410a8f6307"),
+		ObjectId("626dcc0680b21c410a8f6308"),
+		ObjectId("626dcc0680b21c410a8f6309"),
+		ObjectId("626dcc0680b21c410a8f630a"),
+		ObjectId("626dcc0680b21c410a8f630b")
+	]
+}
+> db.catalogs.find()
+{ "_id" : ObjectId("626dcc0680b21c410a8f6307"), "name" : "Процессоры" }
+{ "_id" : ObjectId("626dcc0680b21c410a8f6308"), "name" : "Материнские платы" }
+{ "_id" : ObjectId("626dcc0680b21c410a8f6309"), "name" : "Видеокарты" }
+{ "_id" : ObjectId("626dcc0680b21c410a8f630a"), "name" : "Жесткие диски" }
+{ "_id" : ObjectId("626dcc0680b21c410a8f630b"), "name" : "Оперативная память" }
+> db.products.insertMany([
+... {"name": "Intel Core i3-8100", "description": "Процессор для настольных ПК Intel", "price": "7890.00", "catalog_id": "Процессоры", "created_at": new Date(), "updated_at": new Date()},
+... {"name": "Intel Core i5-7400", "description": "Процессор для настольных ПК Intel", "price": "12700.00", "catalog_id": "Процессоры", "created_at": new Date(), "updated_at": new Date()},
+... {"name": "AMD FX-8320E", "description": "Процессор для настольных ПК AMD", "price": "4780.00", "catalog_id": "Процессоры", "created_at": new Date(), "updated_at": new Date()},
+... {"name": "AMD FX-8320", "description": "Процессор для настольных ПК AMD", "price": "7120.00", "catalog_id": "Процессоры", "created_at": new Date(), "updated_at": new Date()},
+... {"name": "ASUS ROG MAXIMUS X HERO", "description": "Материнская плата ASUS ROG MAXIMUS X HERO, Z370, Socket 1151-V2, DDR4, ATX", "price": "19310.00", "catalog_id": "Материнские платы", "created_at": new Date(), "updated_at": new Date()},
+... {"name": "Gigabyte H310M S2H", "description": "Материнская плата Gigabyte H310M S2H, H310, Socket 1151-V2, DDR4, mATX", "price": "4790.00", "catalog_id": "Материнские платы", "created_at": new Date(), "updated_at": new Date()},
+... {"name": "MSI B250M GAMING PRO", "description": "Материнская плата MSI B250M GAMING PRO, B250, Socket 1151, DDR4, mATX", "price": "5060.00", "catalog_id": "Материнские платы", "created_at": new Date(), "updated_at": new Date()}
+... ])
+{
+	"acknowledged" : true,
+	"insertedIds" : [
+		ObjectId("626dccba80b21c410a8f630c"),
+		ObjectId("626dccba80b21c410a8f630d"),
+		ObjectId("626dccba80b21c410a8f630e"),
+		ObjectId("626dccba80b21c410a8f630f"),
+		ObjectId("626dccba80b21c410a8f6310"),
+		ObjectId("626dccba80b21c410a8f6311"),
+		ObjectId("626dccba80b21c410a8f6312")
+	]
+}
+
+
+
+
+
